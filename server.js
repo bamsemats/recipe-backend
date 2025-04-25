@@ -57,3 +57,26 @@ app.post("/api/get-recipe", async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// New TMDB routes
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+
+app.get("/api/popular", async (req, res) => {
+  try {
+    const response = await axios.get(`${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
+    res.json(response.data.results);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch popular movies" });
+  }
+});
+
+app.get("/api/search", async (req, res) => {
+  const { query } = req.query;
+  try {
+    const response = await axios.get(`${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
+    res.json(response.data.results);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to search movies" });
+  }
+});
