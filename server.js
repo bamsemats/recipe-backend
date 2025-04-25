@@ -63,12 +63,16 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 app.get("/api/popular", async (req, res) => {
   try {
+    console.log('Fetching popular movies...');
     const response = await axios.get(`${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`);
+    console.log('Response from TMDB:', response.data);
     res.json(response.data.results);
   } catch (error) {
+    console.error('Error fetching popular movies:', error);
     res.status(500).json({ error: "Failed to fetch popular movies" });
   }
 });
+
 
 app.get("/api/search", async (req, res) => {
   const { query } = req.query;
