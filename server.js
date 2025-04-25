@@ -18,6 +18,7 @@ You are an assistant that receives a list of ingredients that a user has and sug
 `;
 
 console.log("Anthropic API Key:", process.env.ANTHROPIC_API_KEY);
+console.log('TMDB API Key:', process.env.TMDB_API_KEY);
 
 
 app.post("/api/get-recipe", async (req, res) => {
